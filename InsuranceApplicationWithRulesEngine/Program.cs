@@ -1,3 +1,7 @@
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using RulesEngine.Models;
+
 
 namespace InsuranceApplicationWithRulesEngine
 {
@@ -8,6 +12,10 @@ namespace InsuranceApplicationWithRulesEngine
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var rulesJson = File.ReadAllText("Rules/pricingRules.json");
+            var workflows = JsonConvert.DeserializeObject<Workflow[]>(rulesJson);
+            var rulesEngine = new RulesEngine.RulesEngine(workflows, null);
+            builder.Services.AddSingleton(rulesEngine);
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,7 +34,6 @@ namespace InsuranceApplicationWithRulesEngine
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
