@@ -1,0 +1,33 @@
+[
+  {
+    "WorkflowName": "InsurancePricing",
+    "Rules": [
+      {
+        "RuleName": "Basic_18_25",
+        "Expression": "input.PlanType == 'Basic' && input.Age >= 18 && input.Age <= 25",
+        "Actions": {
+          "OnSuccess": {
+            "Name": "SetPrice",
+            "Context": {
+              "BasePrice": 100,
+              "Multiplier": 1.0
+            }
+          }
+        }
+      },
+      {
+        "RuleName": "Premium_36_50",
+        "Expression": "input.PlanType == 'Premium' && input.Age >= 36 && input.Age <= 50",
+        "Actions": {
+          "OnSuccess": {
+            "Name": "SetPrice",
+            "Context": {
+              "BasePrice": 200,
+              "Multiplier": 1.5
+            }
+          }
+        }
+      }
+    ]
+  }
+]
